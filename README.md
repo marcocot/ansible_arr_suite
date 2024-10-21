@@ -1,5 +1,7 @@
 # arr_uite Ansible Role with Traefik
 
+[![ansible-lint](https://github.com/marcocot/ansible_arr_suite/actions/workflows/lint.yaml/badge.svg)](https://github.com/marcocot/ansible_arr_suite/actions/workflows/lint.yaml)
+
 Welcome to the ultimate Ansible role for setting up the *arr suite (Radarr, Sonarr, and more) using Docker and Traefik as the reverse proxy. This role automates the whole process, so you can spend less time configuring and more time managing your media!
 
 ## What's Included?
