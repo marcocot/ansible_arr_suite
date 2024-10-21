@@ -1,4 +1,4 @@
-# arr_uite Ansible Role with Traefik
+# arr_suite Ansible Role with Traefik
 
 [![ansible-lint](https://github.com/marcocot/ansible_arr_suite/actions/workflows/lint.yaml/badge.svg)](https://github.com/marcocot/ansible_arr_suite/actions/workflows/lint.yaml)
 
