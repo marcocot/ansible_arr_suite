@@ -1,0 +1,26 @@
+---
+driver:
+  name: vagrant
+dependency:
+  name: galaxy
+  options:
+    requirements-file: requirements.yml
+platforms:
+  - name: ubuntu
+    box: ubuntu/jammy64
+    hostname: foo.bar.com
+    interfaces:
+      - auto_config: true
+        network_name: private_network
+        type: dhcp
+    memory: 2048
+    cpus: 2
+  # - name: archlinux
+  #   box: archlinux/archlinux
+  #   hostname: foo.bar.com
+  #   interfaces:
+  #     - auto_config: true
+  #       network_name: private_network
+  #       type: dhcp
+  #   memory: 2048
+  #   cpus: 2

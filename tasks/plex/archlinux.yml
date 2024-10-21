@@ -1,0 +1,9 @@
+---
+- name: Install Plex Media Server on ArchLinux
+  become_user: "{{ ansible_user }}"
+  become: true
+  community.general.pacman:
+    name: "{{ arr_plex_package_name }}"
+    state: present
+    executable: "{{ arr_archlinux_aur_helper }}"
+    update_cache: true

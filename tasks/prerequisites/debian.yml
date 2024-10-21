@@ -1,0 +1,5 @@
+---
+- name: Install pre-requisites on Debian
+  ansible.builtin.apt:
+    name: python3-requests
+    state: present

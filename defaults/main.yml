@@ -1,0 +1,30 @@
+---
+arr_containers_service:
+  - name: prowlarr
+    state: started
+  - name: radarr
+    state: started
+  - name: sonarr
+    state: started
+  - name: bazarr
+    state: started
+  - name: calibre-web
+    state: absent
+  - name: tautulli
+    state: started
+  - name: overseerr
+    state: started
+  - name: kavita
+    state: started
+  - name: mylar3
+    state: started
+
+arr_containers_service_uid: "1000"
+arr_containers_service_gid: "1000"
+arr_traefik_version: "3.2"
+arr_timezone: Europe/Rome
+arr_domain: mydomain.com
+arr_acme_email: ""
+arr_plex_package_name: plex-media-server-plexpass
+arr_archlinux_aur_helper: yay
+arr_media_folder: "/mnt/media"

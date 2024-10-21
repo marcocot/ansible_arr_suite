@@ -1,0 +1,6 @@
+---
+- name: Ensure python-pip is installed
+  community.general.pacman:
+    name: python-requests
+    state: present
+    update_cache: true
