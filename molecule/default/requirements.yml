@@ -1,2 +1,6 @@
+---
 roles:
-- name: geerlingguy.docker
+  - name: geerlingguy.docker
+collections:
+  - name: community.docker
+  - name: community.general

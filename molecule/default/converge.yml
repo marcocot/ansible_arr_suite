@@ -5,31 +5,31 @@
   become: true
   tasks:
     - name: Check downloads existence
-      stat:
-        path: "/mnt/media/downloads"
+      ansible.builtin.stat:
+        path: /mnt/media/downloads
       register: directory_check
     - name: Assert that /mnt/media/downloads exists
-      assert:
+      ansible.builtin.assert:
         that:
-          - "directory_check.stat.exists"
-        fail_msg: "Missing downloads dir"
-        success_msg: "Success"
+          - directory_check.stat.exists
+        fail_msg: Missing downloads dir
+        success_msg: Success
 
     - name: Assert that Plex service is running
-      systemd:
+      ansible.builtin.systemd:
         name: plexmediaserver
         state: started
       register: plex_status
 
     - name: Assert Plex service is active and running
-      assert:
+      ansible.builtin.assert:
         that:
           - plex_status.status.ActiveState == "active"
           - plex_status.status.SubState == "running"
 
     - name: Assert that Plex is responding on port 32400
-      wait_for:
-        host: "localhost"
+      ansible.builtin.wait_for:
+        host: localhost
         port: 32400
         state: started
         timeout: 10

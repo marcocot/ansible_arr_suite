@@ -1,16 +1,23 @@
+---
 name: ansible-lint
 on:
   pull_request:
-    branches: ["master"]
+    branches: [master]
   push:
-    branches: ["master"]
+    branches: [master]
 jobs:
   build:
     name: Ansible Lint # Naming the build is important to use it as a status check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: abatilo/actions-poetry@v2
+      - run: poetry install
       - name: Run ansible-lint
         uses: ansible/ansible-lint@main
         with:
-          setup_python: "true"
+          setup_python: "false"
+          requirements_file: molecule/default/requirements.yml
