@@ -24,6 +24,8 @@ Before you dive in, make sure you have:
 
 ## How to Use
 
+[Ansible Galaxy](https://galaxy.ansible.com/ui/standalone/roles/marcocot/arr_suite/install/)
+
 Super simple to get started. Just include the role in your playbook:
 
 ```yaml
@@ -94,16 +96,16 @@ This list lets you specify which services to run and their state (started, absen
 ## Service Descriptions
 Here’s a quick rundown of the services you can configure with this role, along with links to their official sites:
 
-* Prowlarr: Indexer manager for *arr applications (handles the indexers for searching and finding media).
-* Radarr: A movie collection manager, automating downloading and managing movie files.
-* Sonarr: A TV show collection manager, automating downloading and managing TV show episodes.
-* Bazarr: A companion to Radarr and Sonarr, used for managing subtitles.
-* Calibre-Web: A web-based ebook library manager, a nice addition for managing ebooks.
-* qBittorrent: An open-source BitTorrent client that handles downloading files. Often used as the download client for *arr apps.
-* Tautulli: A monitoring and tracking tool for Plex, showing what’s being watched and keeping logs.
-* Overseerr: A request management and media discovery tool for the *arr suite, enabling users to request media.
-* Kavita: A self-hosted digital library for managing comic and manga collections.
-* Mylar3: A media manager for comic books, providing automated downloads similar to Radarr/Sonarr.
+* [Prowlarr](https://prowlarr.com/): Indexer manager for *arr applications (handles the indexers for searching and finding media).
+* [Radarr](https://radarr.video/): A movie collection manager, automating downloading and managing movie files.
+* [Sonarr](https://sonarr.tv/): A TV show collection manager, automating downloading and managing TV show episodes.
+* [Bazarr](https://www.bazarr.media/): A companion to Radarr and Sonarr, used for managing subtitles.
+* [Calibre-Web](https://github.com/janeczku/calibre-web): A web-based ebook library manager, a nice addition for managing ebooks.
+* [qBittorrent](https://www.qbittorrent.org/): An open-source BitTorrent client that handles downloading files. Often used as the download client for *arr apps.
+* [Tautulli](https://tautulli.com/): A monitoring and tracking tool for Plex, showing what’s being watched and keeping logs.
+* [Overseerr](https://overseerr.dev/): A request management and media discovery tool for the *arr suite, enabling users to request media.
+* [Kavita](https://www.kavitareader.com/): A self-hosted digital library for managing comic and manga collections.
+* [Mylar3](https://github.com/mylar3/mylar3): A media manager for comic books, providing automated downloads similar to Radarr/Sonarr.
 
 ## Running tests
 
