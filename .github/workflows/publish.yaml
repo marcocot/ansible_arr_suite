@@ -1,0 +1,21 @@
+name: Publish to Ansible Galaxy
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  publish_role:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: abatilo/actions-poetry@v2
+      - run: poetry install
+      - name: Publish to Ansible Galaxy
+        run: ansible-galaxy role import --token ${{ secrets.ANSIBLE_GALAXY_API_KEY }}  marcocot ansible_arr_suite
