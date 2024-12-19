@@ -1,5 +1,10 @@
 ---
 - name: Install pre-requisites on Debian
   ansible.builtin.apt:
-    name: python3-requests
+    name: "{{ item }}"
     state: present
+    update_cache: true
+  with_items:
+    - gpg-agent
+    - python3-requests
+    - python3-debian

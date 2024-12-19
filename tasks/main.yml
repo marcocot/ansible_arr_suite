@@ -7,101 +7,101 @@
   ansible.builtin.include_tasks: prerequisites/archlinux.yml
   when: ansible_facts['os_family'] == "Archlinux"
 
-- name: Setup reverse proxy
-  community.docker.docker_container:
-    name: reverse-proxy
-    image: traefik:{{ arr_traefik_version }}
-    log_driver: syslog
-    command:
-      - --api.insecure=true
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      - --entrypoints.web.http.redirections.entryPoint.to=websecure
-      - --entrypoints.websecure.http.tls.certresolver=myresolver
-      - --certificatesresolvers.myresolver.acme.tlschallenge=true
-      - --certificatesresolvers.myresolver.acme.email={{ arr_acme_email }}
-      - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
-      - --providers.docker.defaultRule=Host(`{{ '{{' }} .Name }}.{{ arr_domain }}`)
-    env:
-      TZ: "{{ arr_timezone }}"
-    state: started
-    restart_policy: always
-    volumes:
-      - /usr/loca/etc/letsencrypt:/letsencrypt
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    ports:
-      - 443:443
-      - 80:80
-      - 9080:8080
+# - name: Setup reverse proxy
+#   community.docker.docker_container:
+#     name: reverse-proxy
+#     image: traefik:{{ arr_traefik_version }}
+#     log_driver: syslog
+#     command:
+#       - --api.insecure=true
+#       - --providers.docker=true
+#       - --providers.docker.exposedbydefault=false
+#       - --entrypoints.web.address=:80
+#       - --entrypoints.websecure.address=:443
+#       - --entrypoints.web.http.redirections.entryPoint.to=websecure
+#       - --entrypoints.websecure.http.tls.certresolver=myresolver
+#       - --certificatesresolvers.myresolver.acme.tlschallenge=true
+#       - --certificatesresolvers.myresolver.acme.email={{ arr_acme_email }}
+#       - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
+#       - --providers.docker.defaultRule=Host(`{{ '{{' }} .Name }}.{{ arr_domain }}`)
+#     env:
+#       TZ: "{{ arr_timezone }}"
+#     state: started
+#     restart_policy: always
+#     volumes:
+#       - /usr/loca/etc/letsencrypt:/letsencrypt
+#       - /var/run/docker.sock:/var/run/docker.sock:ro
+#     ports:
+#       - 443:443
+#       - 80:80
+#       - 9080:8080
 
-- name: Create Traefik labels's dictionary
-  ansible.builtin.set_fact:
-    traefik_labels: "{{ traefik_labels | default({}) | combine({item.key: item.value}) }}"
-  with_items:
-    - { key: traefik.enable, value: "true" }
+# - name: Create Traefik labels's dictionary
+#   ansible.builtin.set_fact:
+#     traefik_labels: "{{ traefik_labels | default({}) | combine({item.key: item.value}) }}"
+#   with_items:
+#     - { key: traefik.enable, value: "true" }
 
-- name: Apps | transmission
-  community.docker.docker_container:
-    name: transmission
-    image: lscr.io/linuxserver/transmission:4.0.5
-    state: started
-    restart_policy: always
-    log_driver: syslog
-    env:
-      PUID: "{{ arr_containers_service_uid }}"
-      PGID: "{{ arr_containers_service_gid }}"
-      TZ: "{{ arr_timezone }}"
-    exposed_ports:
-      - "9091"
-    ports:
-      - 51413:51413
-      - 51413:51413/udp
-    volumes:
-      - "{{ arr_media_folder }}/config/transmission:/config"
-      - "{{ arr_media_folder }}/downloads:/downloads"
-      - "{{ arr_media_folder }}/downloads/watch:/watch"
-    labels:
-      traefik.http.services.transmission.loadbalancer.server.port: "9091"
-      traefik.enable: "true"
+# - name: Apps | transmission
+#   community.docker.docker_container:
+#     name: transmission
+#     image: lscr.io/linuxserver/transmission:4.0.5
+#     state: started
+#     restart_policy: always
+#     log_driver: syslog
+#     env:
+#       PUID: "{{ arr_containers_service_uid }}"
+#       PGID: "{{ arr_containers_service_gid }}"
+#       TZ: "{{ arr_timezone }}"
+#     exposed_ports:
+#       - "9091"
+#     ports:
+#       - 51413:51413
+#       - 51413:51413/udp
+#     volumes:
+#       - "{{ arr_media_folder }}/config/transmission:/config"
+#       - "{{ arr_media_folder }}/downloads:/downloads"
+#       - "{{ arr_media_folder }}/downloads/watch:/watch"
+#     labels:
+#       traefik.http.services.transmission.loadbalancer.server.port: "9091"
+#       traefik.enable: "true"
 
-- name: Apps | container
-  community.docker.docker_container:
-    name: "{{ service.name }}"
-    image: linuxserver/{{ service.name }}:latest
-    state: "{{ service.state }}"
-    restart_policy: always
-    image_name_mismatch: recreate
-    env:
-      PUID: "{{ arr_containers_service_uid }}"
-      PGID: "{{ arr_containers_service_gid }}"
-      TZ: "{{ arr_timezone }}"
-    log_driver: syslog
-    volumes:
-      - "{{ arr_media_folder }}/config/{{ service.name }}:/config"
-      - "{{ arr_media_folder }}/downloads:/downloads"
-      - "{{ arr_media_folder }}/library/movies:/movies"
-      - "{{ arr_media_folder }}/library/tv:/tv"
-      - "{{ arr_media_folder }}/library/books:/books"
-      - "{{ arr_media_folder }}/library/comics:/comics"
-    labels: "{{ traefik_labels }}"
-  loop: "{{ arr_containers_service }}"
-  loop_control:
-    loop_var: service
+# - name: Apps | container
+#   community.docker.docker_container:
+#     name: "{{ service.name }}"
+#     image: linuxserver/{{ service.name }}:latest
+#     state: "{{ service.state }}"
+#     restart_policy: always
+#     image_name_mismatch: recreate
+#     env:
+#       PUID: "{{ arr_containers_service_uid }}"
+#       PGID: "{{ arr_containers_service_gid }}"
+#       TZ: "{{ arr_timezone }}"
+#     log_driver: syslog
+#     volumes:
+#       - "{{ arr_media_folder }}/config/{{ service.name }}:/config"
+#       - "{{ arr_media_folder }}/downloads:/downloads"
+#       - "{{ arr_media_folder }}/library/movies:/movies"
+#       - "{{ arr_media_folder }}/library/tv:/tv"
+#       - "{{ arr_media_folder }}/library/books:/books"
+#       - "{{ arr_media_folder }}/library/comics:/comics"
+#     labels: "{{ traefik_labels }}"
+#   loop: "{{ arr_containers_service }}"
+#   loop_control:
+#     loop_var: service
 
-- name: Apps | watchtower
-  community.docker.docker_container:
-    name: watchtower
-    image: containrrr/watchtower
-    state: started
-    restart_policy: always
-    log_driver: syslog
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /etc/localtime:/etc/localtime:ro
-    env:
-      WATCHTOWER_CLEANUP: "true"
+# - name: Apps | watchtower
+#   community.docker.docker_container:
+#     name: watchtower
+#     image: containrrr/watchtower
+#     state: started
+#     restart_policy: always
+#     log_driver: syslog
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
+#       - /etc/localtime:/etc/localtime:ro
+#     env:
+#       WATCHTOWER_CLEANUP: "true"
 
 - name: Install Plex Media Server on Debian
   ansible.builtin.include_tasks: plex/debian.yml

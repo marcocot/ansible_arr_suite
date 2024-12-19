@@ -1,26 +1,27 @@
 ---
 driver:
-  name: vagrant
+  name: docker
 dependency:
   name: galaxy
   options:
     requirements-file: requirements.yml
 platforms:
   - name: ubuntu
-    box: ubuntu/jammy64
-    hostname: foo.bar.com
-    interfaces:
-      - auto_config: true
-        network_name: private_network
-        type: dhcp
-    memory: 2048
-    cpus: 2
+    image: geerlingguy/docker-ubuntu2204-ansible:latest
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cgroupns_mode: host
+    pid: host
+    privileged: true
+    pre_build_image: true
+    command: /usr/sbin/init
+    capabilities:
+    - SYS_ADMIN
   # - name: archlinux
-  #   box: archlinux/archlinux
-  #   hostname: foo.bar.com
-  #   interfaces:
-  #     - auto_config: true
-  #       network_name: private_network
-  #       type: dhcp
-  #   memory: 2048
-  #   cpus: 2
+  #   image: archlinux:latest
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:rw
+  #   cgroupns_mode: host
+  #   privileged: true
+  #   pre_build_image: true
+  #   command: /usr/sbin/init

@@ -1,22 +1,23 @@
 ---
-- name: Add Plex repository key
-  ansible.builtin.apt_key:
-    url: https://downloads.plex.tv/plex-keys/PlexSign.key
-    state: present
-  register: status_plex_repo
-
-- name: Configure Plex repository
-  ansible.builtin.apt_repository:
-    repo: deb https://downloads.plex.tv/repo/deb public main
-    state: present
-    update_cache: false
-  register: status_plex_repo
+- name: Add Plex repository
+  deb822_repository:
+    name: plex
+    types: deb
+    uris: https://downloads.plex.tv/repo/deb
+    suites: public
+    components: main
+    architectures: amd64
+    signed_by: https://downloads.plex.tv/plex-keys/PlexSign.key
 
 - name: Install Plex Server
   ansible.builtin.apt:
     name: plexmediaserver
     state: present
-    update_cache: "{{ status_plex_repo.changed }}"
+    update_cache: true
+
+- name: Just force systemd to re-execute itself
+  ansible.builtin.systemd_service:
+    daemon_reexec: true
 
 - name: Start and enable Plex service
   ansible.builtin.service:

@@ -9,8 +9,9 @@ readme = "README.md"
 python = "^3.12"
 ansible = "^10.5.0"
 molecule = "^24.9.0"
-molecule-plugins = {extras = ["vagrant"], version = "^23.5.3"}
-ansible-lint = {version = "^24.9.0", markers = "platform_system != 'Windows'"}
+molecule-plugins = {extras = ["vagrant", "docker"], version = "^23.5.3"}
+ansible-lint = {version = "^24.9.0  ", markers = "platform_system != 'Windows'"}
+python-debian = "^0.1.49"
 
 
 [build-system]
