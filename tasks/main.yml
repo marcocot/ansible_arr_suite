@@ -85,6 +85,7 @@
       - "{{ arr_media_folder }}/library/tv:/tv"
       - "{{ arr_media_folder }}/library/books:/books"
       - "{{ arr_media_folder }}/library/comics:/comics"
+      - "{{ arr_media_folder }}/library/music:/music"
     labels: "{{ traefik_labels }}"
   loop: "{{ arr_containers_service }}"
   loop_control:
