@@ -28,3 +28,4 @@ arr_acme_email: ""
 arr_plex_package_name: plex-media-server-plexpass
 arr_archlinux_aur_helper: yay
 arr_media_folder: /mnt/media
+arr_plex_enable: true
