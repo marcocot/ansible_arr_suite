@@ -16,6 +16,6 @@ jobs:
         with:
           python-version: "3.12"
       - uses: abatilo/actions-poetry@v2
-      - run: poetry install
+      - run: poetry install --no-root
       - name: Publish to Ansible Galaxy
         run: ansible-galaxy role import --token ${{ secrets.ANSIBLE_GALAXY_API_KEY }}  marcocot ansible_arr_suite
