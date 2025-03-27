@@ -106,7 +106,7 @@
 
 - name: Install Plex Media Server on Debian
   ansible.builtin.include_tasks: plex/debian.yml
-  when: 
+  when:
     - ansible_facts['os_family'] == "Debian"
     - arr_plex_enable | default(false)
 
